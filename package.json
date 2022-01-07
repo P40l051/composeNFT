@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "NFT image processing and json creation",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jimp": "^0.16.1",
+    "junk": "^4.0.0"
+  }
 }
