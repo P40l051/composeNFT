@@ -4,7 +4,7 @@
 import fs from 'fs';
 import { isNotJunk } from 'junk';
 
-const __dirname = "NFT_asset";
+const __dirname = "NFT_asset1";
 const _baseName = "fakePunk";
 const propertyNameList = fs.readdirSync(__dirname).sort().filter(isNotJunk);
 
@@ -15,17 +15,18 @@ meta['name'] = [];
 
 async function main() {
 
-    for (let tokenID = 1; tokenID < 50; tokenID) {
+    for (let tokenID = 1; tokenID < 5; tokenID) {
         meta['name'] = _baseName + tokenID;
         for (let i = 0; i < propertyNameList.length; i++) {
             var propertyValues = {};
             var property = propertyNameList[i].split('_')[1];
+
             propertyValues[property] = [];
 
             propertyValues[property] = fs.readdirSync(__dirname + "/" + propertyNameList[i]).sort().filter(isNotJunk);
             var rand = between(0, propertyValues[property].length)
             var value = propertyValues[property][rand].split('.').slice(0, -1).join('');
-            //console.log("Property", i, value)
+            //console.log("Property", propertyNameList[i])
             var data = {
                 propertyName: property,
                 propertyValue: value
