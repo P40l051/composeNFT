@@ -4,6 +4,7 @@
 import fs from 'fs';
 import { isNotJunk } from 'junk';
 
+const _randomToken = 5;
 const __dirname = "NFT_asset1";
 const _baseName = "fakePunk";
 const propertyNameList = fs.readdirSync(__dirname).sort().filter(isNotJunk);
@@ -12,11 +13,14 @@ var meta = {};
 
 meta['attributes'] = [];
 meta['name'] = [];
+meta['description'] = [];
 
 async function main() {
 
-    for (let tokenID = 1; tokenID < 5; tokenID) {
+    for (let tokenID = 1; tokenID < _randomToken; tokenID) {
         meta['name'] = _baseName + tokenID;
+        meta['description'] = _baseName + tokenID + " is just one..... There are " + (_randomToken - 1) + " other unique token of this family";
+
         for (let i = 0; i < propertyNameList.length; i++) {
             var propertyValues = {};
             var property = propertyNameList[i].split('_')[1];
