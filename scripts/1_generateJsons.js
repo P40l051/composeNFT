@@ -1,13 +1,12 @@
-//// non funziona.... capire come generare la sequenza corretta di attributi////
-
-
 import fs from 'fs';
 import { isNotJunk } from 'junk';
+import config from '../config.js';
 
-const _randomToken = 7;
-const _filedir = "NFT_asset1";
-const _jsondir = "Output_files/json";
-const _baseName = "fakePunk #";
+const _randomToken = config.randomToken;
+const _filedir = config.filedir;
+const _jsondir = config.jsondir;
+const _baseName = config.baseName;
+
 
 const propertyNameList = fs.readdirSync(_filedir).sort().filter(isNotJunk);
 
@@ -56,6 +55,7 @@ async function main() {
 }
 
 function createJson(_meta, _tokenID) {
+    fs.mkdir(_jsondir, (err) => { });
     const json = JSON.stringify(_meta);
     fs.writeFile(_jsondir + "/" + _baseName + _tokenID + ".json", json, (err) => {
         if (err)
@@ -89,6 +89,7 @@ function checkJsons(otherJson, newJson) {
         }
     };
     return sameJson;
+
 }
 
 function sleep(ms) {

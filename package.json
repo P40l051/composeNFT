@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.6",
     "jimp": "^0.16.1",
     "junk": "^4.0.0"
   }
