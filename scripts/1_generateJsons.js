@@ -7,7 +7,7 @@ import { isNotJunk } from 'junk';
 const _randomToken = 7;
 const _filedir = "NFT_asset1";
 const _jsondir = "Output_files/json";
-const _baseName = "fakePunk";
+const _baseName = "fakePunk #";
 
 const propertyNameList = fs.readdirSync(_filedir).sort().filter(isNotJunk);
 
@@ -89,7 +89,6 @@ function checkJsons(otherJson, newJson) {
         }
     };
     return sameJson;
-
 }
 
 function sleep(ms) {
