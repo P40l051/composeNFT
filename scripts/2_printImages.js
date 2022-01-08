@@ -19,9 +19,6 @@ async function main() {
     for (let i = 0; i < jsons.length; i++) {
         var array = []
         const Json = readJson(jsons[i]);
-        //console.log("attributes punk", i + 1)
-        //console.log(Json['attributes']);
-
         for (let j = 0; j < Json['attributes'].length; j++) {
             const output = _finalImageDir + "/" + _baseName + (i + 1) + outputImageExtension;
             const layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["propertyValue"] + inputImageExtension;

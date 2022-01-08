@@ -3,3 +3,5 @@ node_modules
 Output_files/images
 Output_files/json
 
+.env
+
