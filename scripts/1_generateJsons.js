@@ -4,10 +4,12 @@
 import fs from 'fs';
 import { isNotJunk } from 'junk';
 
-const _randomToken = 5;
-const __dirname = "NFT_asset1";
+const _randomToken = 7;
+const _filedir = "NFT_asset1";
+const _jsondir = "Output_files/json";
 const _baseName = "fakePunk";
-const propertyNameList = fs.readdirSync(__dirname).sort().filter(isNotJunk);
+
+const propertyNameList = fs.readdirSync(_filedir).sort().filter(isNotJunk);
 
 var meta = {};
 
@@ -17,7 +19,7 @@ meta['description'] = [];
 
 async function main() {
 
-    for (let tokenID = 1; tokenID < _randomToken; tokenID) {
+    for (let tokenID = 1; tokenID < _randomToken + 1; tokenID) {
         meta['name'] = _baseName + tokenID;
         meta['description'] = _baseName + tokenID + " is just one..... There are " + (_randomToken - 1) + " other unique token of this family";
 
@@ -27,7 +29,7 @@ async function main() {
 
             propertyValues[property] = [];
 
-            propertyValues[property] = fs.readdirSync(__dirname + "/" + propertyNameList[i]).sort().filter(isNotJunk);
+            propertyValues[property] = fs.readdirSync(_filedir + "/" + propertyNameList[i]).sort().filter(isNotJunk);
             var rand = between(0, propertyValues[property].length)
             var value = propertyValues[property][rand].split('.').slice(0, -1).join('');
             //console.log("Property", propertyNameList[i])
@@ -55,7 +57,7 @@ async function main() {
 
 function createJson(_meta, _tokenID) {
     const json = JSON.stringify(_meta);
-    fs.writeFile("Output_files/json/" + _baseName + _tokenID + ".json", json, (err) => {
+    fs.writeFile(_jsondir + "/" + _baseName + _tokenID + ".json", json, (err) => {
         if (err)
             throw err;
     })
@@ -64,9 +66,7 @@ function createJson(_meta, _tokenID) {
 function readJson(id) {
     try {
         const data = fs.readFileSync("Output_files/json/" + _baseName + id + ".json", 'utf8');
-        // parse JSON string to JSON object
         const databases = JSON.parse(data);
-        //console.log(databases['attributes']);
         return databases;
     } catch (err) {
         console.log(`Error reading file from disk: ${err}`);
