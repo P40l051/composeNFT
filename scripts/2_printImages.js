@@ -6,7 +6,6 @@ import config from '../config.js';
 const _filedir = config.filedir;
 const _jsondir = config.jsondir;
 const _baseName = config.baseName;
-
 const inputImageExtension = config.inputImageExtension;
 const outputImageExtension = config.outputImageExtension;
 const _finalImageDir = config.finalImageDir;
@@ -14,13 +13,16 @@ const _finalImageDir = config.finalImageDir;
 const propertyNameList = fs.readdirSync(_filedir).sort().filter(isNotJunk);
 
 async function main() {
-    const jsons = fs.readdirSync(_jsondir).sort().filter(isNotJunk);
+    const jsons = fs.readdirSync(_jsondir).filter(isNotJunk);
+    jsons.sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
     fs.mkdir(_finalImageDir, (err) => { });
     for (let i = 0; i < jsons.length; i++) {
         var array = []
         const Json = readJson(jsons[i]);
-        // console.log(Json['attributes']);
-        for (let j = 0; j <= Json['attributes'].length - 1; j++) {
+        //console.log("attributes punk", i + 1)
+        //console.log(Json['attributes']);
+
+        for (let j = 0; j < Json['attributes'].length; j++) {
             const output = _finalImageDir + "/" + _baseName + (i + 1) + outputImageExtension;
             const layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["propertyValue"] + inputImageExtension;
             var ren_layer = await Jimp.read(layer);
