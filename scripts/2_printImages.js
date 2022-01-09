@@ -4,7 +4,7 @@ import Jimp from 'jimp';
 import config from '../config.js';
 
 const _filedir = config.filedir;
-const _jsondir = config.jsondir;
+const _jsonDir = config.jsondir;
 const _baseName = config.baseName;
 const inputImageExtension = config.inputImageExtension;
 const outputImageExtension = config.outputImageExtension;
@@ -13,7 +13,7 @@ const _finalImageDir = config.finalImageDir;
 const propertyNameList = fs.readdirSync(_filedir).sort().filter(isNotJunk);
 
 async function main() {
-    const jsons = fs.readdirSync(_jsondir).filter(isNotJunk);
+    const jsons = fs.readdirSync(_jsonDir).filter(isNotJunk);
     jsons.sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
     fs.mkdir(_finalImageDir, (err) => { });
     for (let i = 0; i < jsons.length; i++) {
@@ -44,7 +44,7 @@ async function main() {
 
 function readJson(_id) {
     try {
-        const data = fs.readFileSync(_jsondir + "/" + _id, 'utf8');
+        const data = fs.readFileSync(_jsonDir + "/" + _id, 'utf8');
         const databases = JSON.parse(data);
         return databases;
     } catch (err) {

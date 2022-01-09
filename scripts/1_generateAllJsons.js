@@ -3,7 +3,7 @@ import { isNotJunk } from 'junk';
 import config from '../config.js';
 
 const _filedir = config.filedir;
-const _jsondir = config.jsondir;
+const _jsonDir = config.jsondir;
 const _baseName = config.baseName;
 
 var meta = {};
@@ -26,7 +26,7 @@ console.log("Numer of total combinations is:", combinations.length)
 
 for (let tokenID = 1; tokenID <= combinations.length; tokenID++) {
     meta['name'] = _baseName + tokenID;
-    meta['description'] = _baseName + tokenID + " is just one..... In total there are other " + (combinations.length) + " unique token of this family";
+    meta['description'] = _baseName + tokenID + " is just one..... the total number of currently existing families with unique combinations of characteristics is " + (combinations.length);
 
     for (let i = 0; i < combinations[tokenID - 1].length; i++) {
         var data = {
@@ -56,9 +56,9 @@ function cartesian(...args) {
 }
 
 function createJson(_meta, _tokenID) {
-    fs.mkdir(_jsondir, (err) => { });
+    fs.mkdir(_jsonDir, (err) => { });
     const json = JSON.stringify(_meta);
-    fs.writeFile(_jsondir + "/" + _baseName + _tokenID + ".json", json, (err) => {
+    fs.writeFile(_jsonDir + "/" + _baseName + _tokenID + ".json", json, (err) => {
         if (err)
             throw err;
     })

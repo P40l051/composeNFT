@@ -4,7 +4,7 @@ import config from '../config.js';
 
 const _randomToken = config.randomToken;
 const _filedir = config.filedir;
-const _jsondir = config.jsondir;
+const _jsonDir = config.jsondir;
 const _baseName = config.baseName;
 
 
@@ -55,9 +55,9 @@ async function main() {
 }
 
 function createJson(_meta, _tokenID) {
-    fs.mkdir(_jsondir, (err) => { });
+    fs.mkdir(_jsonDir, (err) => { });
     const json = JSON.stringify(_meta);
-    fs.writeFile(_jsondir + "/" + _baseName + _tokenID + ".json", json, (err) => {
+    fs.writeFile(_jsonDir + "/" + _baseName + _tokenID + ".json", json, (err) => {
         if (err)
             throw err;
     })
