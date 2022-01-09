@@ -30,8 +30,8 @@ for (let tokenID = 1; tokenID <= combinations.length; tokenID++) {
 
     for (let i = 0; i < combinations[tokenID - 1].length; i++) {
         var data = {
-            propertyName: propertyNameList[i].split('_')[1],
-            propertyValue: combinations[tokenID - 1][i].split('.').slice(0, -1).join('')
+            trait_type: propertyNameList[i].split('_')[1],
+            value: combinations[tokenID - 1][i].split('.').slice(0, -1).join('')
         };
         meta['attributes'].push(data);
     }

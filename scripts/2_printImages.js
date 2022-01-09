@@ -21,14 +21,13 @@ async function main() {
         const Json = readJson(jsons[i]);
         for (let j = 0; j < Json['attributes'].length; j++) {
             const output = _finalImageDir + "/" + _baseName + (i + 1) + outputImageExtension;
-            const layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["propertyValue"] + inputImageExtension;
+            const layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["value"] + inputImageExtension;
             var ren_layer = await Jimp.read(layer);
             if (j == 0) {
                 var input = await Jimp.read(layer);
             } else {
                 var input = await Jimp.read(output);
             }
-            //select correct oreder of composition
             Jimp.read(input)
                 .then(image => {
                     image.blit(ren_layer, 0, 0)

@@ -25,16 +25,13 @@ async function main() {
         for (let i = 0; i < propertyNameList.length; i++) {
             var propertyValues = {};
             var property = propertyNameList[i].split('_')[1];
-
             propertyValues[property] = [];
-
             propertyValues[property] = fs.readdirSync(_filedir + "/" + propertyNameList[i]).sort().filter(isNotJunk);
             var rand = between(0, propertyValues[property].length)
             var value = propertyValues[property][rand].split('.').slice(0, -1).join('');
-            //console.log("Property", propertyNameList[i])
             var data = {
-                propertyName: property,
-                propertyValue: value
+                trait_type: property,
+                value: value
             };
             meta['attributes'].push(data);
         }
@@ -83,7 +80,7 @@ function checkJsons(otherJson, newJson) {
     var counter = 0;
     if (otherJson['attributes'] != newJson['attributes']) { sameJson = false; }
     for (let i = 0; i <= otherJson['attributes'].length - 1; i++) {
-        if (otherJson['attributes'][i]["propertyValue"] == newJson['attributes'][i]["propertyValue"]) {
+        if (otherJson['attributes'][i]["value"] == newJson['attributes'][i]["value"]) {
             counter++;
             if (counter == otherJson['attributes'].length) { sameJson = true; }
         }
