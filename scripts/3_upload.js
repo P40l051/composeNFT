@@ -8,22 +8,20 @@ dotenv.config()
 const endpoint = 'https://api.nft.storage' // the default
 const token = process.env.NFTSTORAGE_API_KEY;
 
-const _jsondir = config.jsondir;
+const _jsonDir = config.jsondir;
 const _baseName = config.baseName;
 const _imageExtension = config.outputImageExtension;
 const _imageDir = config.finalImageDir;
 
 async function main() {
     const storage = new NFTStorage({ endpoint, token })
-    const imageDirCID = await uploadDir(_imageDir, storage);
+    var [imageDirCID, imageNumber] = await uploadDir(_imageDir, storage);
     console.log("imageDirCID is:", imageDirCID);
     console.log("IPFS Directory link:", "https://ipfs.io/ipfs/" + imageDirCID)
-
-
-    const newJsons = updateJsons(_jsondir, imageDirCID);
-    /*
-        jsonsDirCID = uploadJsons(_jsondir,storage);
-        */
+    updateJsons(_jsonDir, imageDirCID, imageNumber);
+    var [jsonsDirCID, jsonsNumber] = await uploadDir(_jsonDir, storage);
+    console.log("jsonsDirCID is:", jsonsDirCID);
+    console.log("IPFS Directory link:", "https://ipfs.io/ipfs/" + jsonsDirCID)
 }
 
 async function uploadDir(_dir, _storage) {
@@ -35,25 +33,38 @@ async function uploadDir(_dir, _storage) {
             newarray.push(new File([await fs.promises.readFile(_dir + "/" + List[i])], List[i]))
         }
         console.log("....uploading", newarray.length, "files!")
-        const cid = await _storage.storeDirectory(newarray);
-        console.log("DONE!")
-        return cid;
+        var cid = await _storage.storeDirectory(newarray);
+        return [cid, newarray.length];
     } catch (err) {
         console.log(`Error uploading files to IPFS: ${err}`);
     }
 }
 
-function updateJsons(_dir, _CID) {
+function updateJsons(_dir, _CID, _fileNumber) {
     try {
         const oldJsons = fs.readdirSync(_dir).sort().filter(isNotJunk);
         oldJsons.sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
         for (let i = 0; i < oldJsons.length; i++) {
-            var imageString = "https://ipfs.io/ipfs/" + _CID + "/" + oldJsons[i]
-            var externalUrlString = "https://dweb.link/ipfs/" + _CID + "/" + oldJsons[i]
-            // read json i
-            // add image string
-            // add externalUrlString
-            // print new json[i]
+            if (i < _fileNumber) {
+                var imageString = "https://ipfs.io/ipfs/" + _CID + "/" + oldJsons[i].split('.')[0] + _imageExtension
+                var externalUrlString = "https://dweb.link/ipfs/" + _CID + "/" + oldJsons[i].split('.')[0] + _imageExtension
+                // read json i
+                var data = fs.readFileSync(_jsonDir + "/" + oldJsons[i], 'utf8');
+                var json = JSON.parse(data);
+                json["image"] = imageString;
+                json["external_url"] = externalUrlString;
+                var final = JSON.stringify(json);
+                json["image"] = [];
+                json["external_url"] = [];
+                fs.writeFile(_jsonDir + "/" + oldJsons[i], final, (err) => {
+                    if (err)
+                        throw err;
+                })
+            }
+            else {
+                fs.unlinkSync(_jsonDir + "/" + oldJsons[i]);
+            }
+
         }
         console.log("jsons updated!")
     } catch (err) {
