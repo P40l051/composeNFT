@@ -9,5 +9,6 @@ config.baseName = "fakePunk"; // base mane for each token
 config.inputImageExtension = ".tiff"; //asset file type
 config.outputImageExtension = ".png"; // output images type
 
+config.layersToDelete = ["Skin", "Nose"]; // propertyes we dont want to show on metadata
 
 export default config;
