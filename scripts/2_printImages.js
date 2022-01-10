@@ -18,10 +18,15 @@ async function main() {
     fs.mkdir(_finalImageDir, (err) => { });
     for (let i = 0; i < jsons.length; i++) {
         var array = []
+        var layer = 0;
         const Json = readJson(jsons[i]);
         for (let j = 0; j < Json['attributes'].length; j++) {
             const output = _finalImageDir + "/" + _baseName + (i + 1) + outputImageExtension;
-            const layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["value"] + inputImageExtension;
+            if (Json['attributes'][j]["value"] != null) {
+                layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["value"] + inputImageExtension;
+            } else {
+                layer = _filedir + "/" + propertyNameList[j] + "/" + Json['attributes'][j]["propertyValue"] + inputImageExtension;
+            }
             var ren_layer = await Jimp.read(layer);
             if (j == 0) {
                 var input = await Jimp.read(layer);

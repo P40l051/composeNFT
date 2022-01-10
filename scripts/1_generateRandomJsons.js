@@ -29,10 +29,19 @@ async function main() {
             propertyValues[property] = fs.readdirSync(_filedir + "/" + propertyNameList[i]).sort().filter(isNotJunk);
             var rand = between(0, propertyValues[property].length)
             var value = propertyValues[property][rand].split('.').slice(0, -1).join('');
-            var data = {
-                trait_type: property,
-                value: value
-            };
+            var data = {};
+            if (property.includes("§")) {
+                data = {
+                    propertyName: property.split('§').slice(0, -1).join(''),
+                    propertyValue: value
+                };
+            }
+            else {
+                data = {
+                    trait_type: property,
+                    value: value
+                };
+            }
             meta['attributes'].push(data);
         }
         createJson(meta, tokenID);

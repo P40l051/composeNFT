@@ -27,12 +27,21 @@ console.log("Numer of total combinations is:", combinations.length)
 for (let tokenID = 1; tokenID <= combinations.length; tokenID++) {
     meta['name'] = _baseName + tokenID;
     meta['description'] = _baseName + tokenID + " is just one..... the total number of currently existing families with unique combinations of characteristics is " + (combinations.length);
-
+    var data = {};
     for (let i = 0; i < combinations[tokenID - 1].length; i++) {
-        var data = {
-            trait_type: propertyNameList[i].split('_')[1],
-            value: combinations[tokenID - 1][i].split('.').slice(0, -1).join('')
-        };
+        if (propertyNameList[i].split('_')[1].includes("§")) {
+            data = {
+                propertyName: propertyNameList[i].split('_')[1].split('§').slice(0, -1).join(''),
+                propertyValue: combinations[tokenID - 1][i].split('.').slice(0, -1).join('')
+            };
+        }
+        else {
+            data = {
+                trait_type: propertyNameList[i].split('_')[1],
+                value: combinations[tokenID - 1][i].split('.').slice(0, -1).join('')
+            };
+        }
+
         meta['attributes'].push(data);
     }
     createJson(meta, tokenID);
