@@ -9,7 +9,6 @@ const endpoint = 'https://api.nft.storage' // the default
 const token = process.env.NFTSTORAGE_API_KEY;
 
 const _jsonDir = config.jsondir;
-const _baseName = config.baseName;
 const _imageExtension = config.outputImageExtension;
 const _imageDir = config.finalImageDir;
 
