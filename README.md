@@ -35,10 +35,10 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/UPDATE THIS!!!!!
+$ git clone https://github.com/P40l051/composeNFT.git
 
 # Go into the repository
-$ cd UPDATE THIS!!!!!
+$ cd composeNFT
 
 # Install dependencies
 $ npm install
@@ -80,6 +80,7 @@ Tu upload to IPFS and get the CID
 ```bash
 # Add special Metadata
 $ node scripts/4_upload.js
+```
 
 ## License
 
